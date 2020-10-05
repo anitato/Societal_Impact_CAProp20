@@ -1,8 +1,8 @@
 ---
 title: "Property Crime and Felony Investigation"
-author: "Sivan Yair"
-date: "10/4/2020"
-output: pdf_document
+output: 
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
@@ -31,7 +31,7 @@ questions. We do not have data from after 2016.
 
 Let's start by looking at the trend of property felonies over time.
 ```{r, warning=F}
-# loads table called propertycrimes, produced by script property_felons_in_prison.R
+# loads table called propertycrimes, produced by script propertycrimes.R
 # we cannot share this because you need to create an account to view the data (see README.md)
 # so we just read it in locally
 load("~/Downloads/propertycrimes.rda") 
