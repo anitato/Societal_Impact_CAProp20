@@ -256,7 +256,7 @@ output_ttest=t.test(felons$felons_sum~felons$prop20,conf.level=0.95)
 # reverse output of confidence interval
 conf_int_wobblers_entering_prison = c(-output_ttest$conf.int[2],
                       -output_ttest$conf.int[1])
-saveRDS(conf_int_wobblers_entering_prison,"/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/wobbler_range.RDS")
+saveRDS(conf_int_wobblers_entering_prison,"../Societal_Impact_Prop20/data/wobbler_range.RDS")
 ```
 
 ## Property Crime Rates and Average Cost Below $950
@@ -552,9 +552,9 @@ avg_cost
     ## [1] 385.141
 
 ``` r
-saveRDS(total_crime/as.numeric(avg_LRT_proportion),"/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/total_crime.RDS") # we inflate the total crime rate because not all thefts are larceny
-saveRDS(total_cost,"/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/total_cost.RDS")
-saveRDS(avg_cost,"/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/avg_cost.RDS")
+saveRDS(total_crime/as.numeric(avg_LRT_proportion),"../Societal_Impact_Prop20/data/total_crime.RDS") # we inflate the total crime rate because not all thefts are larceny
+saveRDS(total_cost,"../Societal_Impact_Prop20/data/total_cost.RDS")
+saveRDS(avg_cost,"../Societal_Impact_Prop20/data/avg_cost.RDS")
 ```
 
 ## Caveats
