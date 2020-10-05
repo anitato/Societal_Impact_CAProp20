@@ -75,7 +75,7 @@ ui <- dashboardPage(
                             # Comment out the following line if you don't want that title there
                             title = VariablesTitle,
                             # value = default value, no default value will give you error message
-                            sliderInput("crimeratein", "Percent Reduction in Rates of Property Crimes costing less than $950:", min = 0, max = 100, value = 25), 
+                            sliderInput("crimeratein", "Percent Reduction in Rates of Property Crimes Costing less than $950:", min = 0, max = 100, value = 25), 
                             sliderInput("numpeople", "Number of New Prison Inmates per Year under Prop 20:", min = round(min(conf_int_wobblers_entering_prison)), max = round(max(conf_int_wobblers_entering_prison)), step= 1, value= round(mean(conf_int_wobblers_entering_prison))),
                             sliderInput("pristime", "Average Sentence Length:", min = 1.3, max = 3, step= .1, value= 3)
                             # radioButtons("pristime", "Average Sentence Length:",
