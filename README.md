@@ -208,7 +208,7 @@ Let’s start by looking at the trend of property felonies over time.
 # loads table called propertycrimes, produced by scrip t property_felons_in_prison.R
 # we cannot share this because you need to create an account to view the data (see README.md)
 # so we just read it in locally
-load("/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/propertycrimes.rda") 
+load("../Societal_Impact_Prop20/data/propertycrimes.rda") 
 
 felons = data.frame(propertycrimes) 
 colnames(felons)=c("Year","felons_sum")
@@ -264,7 +264,7 @@ saveRDS(conf_int_wobblers_entering_prison,"../Societal_Impact_Prop20/data/wobble
 We start by loading in the crime data and taking a quick look.
 
 ``` r
-crimes=read.csv("/Users/anita/Documents/GitHub/Societal_Impact_Prop20/data/Crimes_and_Clearances_with_Arson-1985-2019.csv")
+crimes=read.csv("../Societal_Impact_Prop20/data/Crimes_and_Clearances_with_Arson-1985-2019.csv")
 head(crimes)
 ```
 
