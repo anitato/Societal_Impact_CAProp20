@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Societal Impact and Cost of CA Prop 20
 ================
 Lida Anita To, Sivan Yair, and Fernanda Guizar
@@ -769,4 +768,3 @@ We use a simple Poisson model to predict the number of crimes committed per valu
 As described above, Assembly Bill 109 drastically reduced the size of prison populations for those prisoners who were sentenced for involvement in property crime. In addition, we do not have prison data beyond 2016. Therefore we only have a few data points to estimate the mean difference in admitted felons pre- and post- Proposition 47 in 2014. We also likely underestimate the number of crimes that would be considered misdemeanors in the current system but felonies with Prop 20 because we did not have jail records that would allow us to investigate trends in the jail population that was sentenced for property crimes. We believe that there are felony sentences that would be carried out in jails that we do not include as a cost to society in our models.
 
 The total cost of inmates in a year is actually the total cost that taxpayers commit to paying over the next few years, but don't necessarily pay in full the first year that a person is admitted to prison. True yearly costs are more difficult to predict because we would need to account for the growing prison population in the long term, as well as variation among prison sentences rather than the mean, if sentences last for greater than 1 year.
->>>>>>> 977dea40e1ec5f846594ff3e667f27cb2f2c2514
