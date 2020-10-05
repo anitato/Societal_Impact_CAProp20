@@ -86,15 +86,11 @@ and Social Research \[distributor\], 2018-08-30.
 
 <https://openjustice.doj.ca.gov/data>
 
-  - This dataset contains the total number of property crimes committed
-    in California (including those in which perpetrators were not
-    caught) every year since 1980. It includes information on the number
-    of property crimes committed that were valued $50 or less, $50-200,
+  - This dataset contains the total number of property crimes, and some   
+    subcategories, reported in California every year since 1980. It includes information on the number
+    of larceny thefts that were valued $50 or less, $50-200,
     $200-400, and $400+.
-  - *Directions:*
-    1.  Hello world
-    2.  Hello again
-    3.  And again
+  - *Directions:* Simply download the data corresponding to section "Crimes and Clearances (including Arson)"
 
 **Average cost of maintaining a single CA prison inmate per year**
 
@@ -116,10 +112,10 @@ believe that it will make California safer, while opponents of this
 change believe that sending people to prison produces a high cost to
 taxpayers.
 
-What is the cost to taxpayers for increasing the number of prison
+*What is the cost to taxpayers for increasing the number of prison
 inmates as a result of Proposition 20? Does society save money if Prop
 20 causes a reduction in crime rate in California, specifically because
-some property no longer gets stolen?
+some property no longer gets stolen?*
 
 Our interactive figure lets you find out the conditions in which society
 could save money with Prop 20’s affect on petty theft classification.
@@ -175,4 +171,11 @@ Code for the R Shiny interactive widget can be found in
 
 This widget allows you to calculate the net annual cost of the increase
 in prison population as a result of Proposition 20. There are sliders
-for
+for each bolded section above.
+
+## Caveats
+We use a simple Poisson model to predict the number of crimes committed per value of that crime. To parameterize this model we use the number of larceny thefts in discrete cost ranges with different size intervals up until $400. Since around 60% of all property crimes are larceny thefts, we inflate the total number of crimes under $950 predicted by our model by ~0.6 to estimate the contemporary average number of property crimes valued at less than $950 per year.
+
+As described above, Assembly Bill 109 drastically reduced the size of prison populations for those prisoners who were sentenced for involvement in property crime. In addition, we do not have prison data beyond 2016. Therefore we only have a few data points to estimate the mean difference in admitted felons pre- and post- Proposition 47 in 2014. We also likely underestimate the number of crimes that would be considered misdemeanors in the current system but felonies with Prop 20 because we did not have jail records that would allow us to investigate trends in the jail population that was sentenced for property crimes. We believe that there are felony sentences that would be carried out in jails that we do not include as a cost to society in our models.
+
+The total cost of inmates in a year is actually the total cost that taxpayers commit to paying over the next few years, but don't necessarily pay in full the first year that a person is admitted to prison. True yearly costs are more difficult to predict because we would need to account for the growing prison population in the long term, as well as variation among prison sentences rather than the mean, if sentences last for greater than 1 year.
