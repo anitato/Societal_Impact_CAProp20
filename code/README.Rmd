@@ -1,7 +1,6 @@
 ---
 title: "Societal Impact and Cost of CA Prop 20"
-author: "Anita To"
-date: "10/04/2020"
+author: "Lida Anita To, Sivan Yair, and Fernanda Guizar"
 output: rmarkdown::github_document
 ---
 

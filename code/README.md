@@ -1,7 +1,6 @@
 Societal Impact and Cost of CA Prop 20
 ================
-Anita To
-10/04/2020
+Lida Anita To, Sivan Yair, and Fernanda Guizar
 
 # California Proposition 20, Criminal Sentencing, Parole, and DNA Collection Initiative (2020)
 
