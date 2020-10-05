@@ -18,7 +18,7 @@ conf_int_wobblers_entering_prison=readRDS("Societal_Impact_CAProp20/data/wobbler
 
 yearly_inmate_cost=81203 # see https://lao.ca.gov/PolicyAreas/CJ/6_cj_inmatecost
 
-# Add third sliding scale
+# Add third sliding scalev
 
 ## Some variables
 AppTitle <- strong("Proposition 20 Costs")
@@ -98,7 +98,7 @@ server <- function(input, output) {
   
   # For the Learn More section, add all the links here
   
-  url1 <- a("For methods, see our Github ReadMe", href="https://github.com/anitato/Societal_Impact_Prop20")
+  url1 <- a("For methods, see our Github ReadMe", href="https://github.com/anitato/Societal_Impact_CAProp20")
   url2 <- a("2020 – Proposition 20", href="https://ballotpedia.org/California_Proposition_20,_Criminal_Sentencing,_Parole,_and_DNA_Collection_Initiative_(2020)#Assembly_Bill_109_.282011.29 ")
   url3 <- a("2016 – Proposition 57", href="https://ballotpedia.org/California_Proposition_57,_Parole_for_Non-Violent_Criminals_and_Juvenile_Court_Trial_Requirements_(2016) ")
   url4 <- a("2014 – Proposition 47", href="https://ballotpedia.org/California_Proposition_47,_Reduced_Penalties_for_Some_Crimes_Initiative_(2014)")
@@ -192,14 +192,14 @@ server <- function(input, output) {
   output$netcost <- renderValueBox({
     if( (((as.numeric(input$pristime)-1) * input$numpeople * -yearly_inmate_cost) + ((input$crimeratein/100) * total_crime *  avg_cost)) > 0) {
       valueBox(
-        value = format( ((as.numeric(input$pristime)-1) * input$numpeople * -yearly_inmate_cost) + ((input$crimeratein/100) * total_crime *  avg_cost), big.mark=","),
+        value = format( ((as.numeric(input$pristime)-1) * input$numpeople * -yearly_inmate_cost + (input$crimeratein/100) * total_crime *  avg_cost), big.mark=","),
         subtitle = "Net Difference to Society per Year", 
         color= "blue",
         icon = icon("dollar-sign")
       )
     } else {
       valueBox(
-        value = format( ((as.numeric(input$pristime) * input$numpeople * -yearly_inmate_cost) + (input$crimeratein/100) * total_crime *  avg_cost), big.mark=","),
+        value = format( ((as.numeric(input$pristime)-1) * input$numpeople * -yearly_inmate_cost + (input$crimeratein/100) * total_crime *  avg_cost), big.mark=","),
         subtitle = "Net Difference to Society per Year", 
         color= "red",
         icon = icon("dollar-sign")

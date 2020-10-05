@@ -5,8 +5,8 @@ account: anitato
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2942519
-bundleId: 3702409
+bundleId: 3702503
 url: https://anitato.shinyapps.io/Societal_Impact_CAProp20/
-when: 1601862405.38944
+when: 1601865705.92238
 asMultiple: FALSE
 asStatic: FALSE
