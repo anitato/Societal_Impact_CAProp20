@@ -2,7 +2,15 @@ Societal Impact and Cost of CA Prop 20
 ================
 Lida Anita To, Sivan Yair, and Fernanda Guizar
 
-\[1\] University of California - Davis, Dept. of Evolution & Ecology
+University of California — Davis
+
+Deptartment of Evolution & Ecology
+
+-----
+
+### **Interactive widget:**
+
+**<https://anitato.shinyapps.io/Societal_Impact_CAProp20/>**
 
 # California Proposition 20, Criminal Sentencing, Parole, and DNA Collection Initiative (2020)
 
@@ -96,6 +104,9 @@ and Social Research \[distributor\], 2018-08-30.
 
 Code for the R Shiny interactive widget can be found in
 `Societal_Impact_CAProp20/code/CAProp20_rshiny.R`
+
+**You can interact with the live widget
+[here](https://anitato.shinyapps.io/Societal_Impact_CAProp20/).**
 
 This widget allows you to calculate the net annual cost of the increase
 in prison population as a result of Proposition 20. There are sliders
