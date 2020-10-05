@@ -1,0 +1,212 @@
+---
+title: "Property Crime and Felony Investigation"
+author: "Sivan Yair"
+date: "10/4/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+## Overview
+In this document, we first obtain a plausible range of for the number of crimes
+that would be misdemeanors in the present but would become felonies with Prop 20.
+We then infer the crime rate below \$950 and the average cost of crimes below \$950.
+
+
+## New Prison Inmates
+In this section, we identify a 95% confidence interval for the change in
+the number of felons introduced to prison populations when petty theft criminals
+are allowed to go to prison. We do this by comparing the number of felons in prison
+for property crimes from 2011-2014 and 2015-2016. The former range corresponds to
+the years in which prison sentences were permitted, whereas in the latter range
+they were not permitted. We do not use data before 2011 because AB109 caused a large
+decrease in prison populations for reasons outside of the purview of our research 
+questions. We do not have data from after 2016.
+
+
+Let's start by looking at the trend of property felonies over time.
+```{r, warning=F}
+# loads table called propertycrimes, produced by script property_felons_in_prison.R
+# we cannot share this because you need to create an account to view the data (see README.md)
+# so we just read it in locally
+load("~/Downloads/propertycrimes.rda") 
+
+felons = data.frame(propertycrimes) 
+colnames(felons)=c("Year","felons_sum")
+felons$Year=as.integer(as.character(felons$Year))
+# filter just to 1992 and after because data before that is incomplete
+felons = felons %>% filter(Year>=1992)
+
+ggplot(felons,aes(x=Year,y=felons_sum)) + geom_point() + labs(x="Year",y="Number of people admitted to prison for property crimes")
+```
+
+
+Now we can test for a significant difference in mean number of felons admitted between 2011-2014 and 2015-2016
+```{r, warning=F}
+# new column: prop20 is now a T/F variable. Years 2011-2014 represent prop 20 conditions 
+felons = felons %>% filter(Year>2011) %>% mutate(prop20=Year<=2014) 
+
+# paired t test shows there's a significant difference
+t.test(felons$felons_sum~felons$prop20,conf.level=0.95)
+```
+
+We will save the 95 percent confidence interval representing the plausible range of
+the number of misdemeanors that would become felonies with Prop 20. We need to reverse
+the output of the confidence interval (make it positive instead of negative) 
+because the output represents change from having Prop 20 conditions to not
+having Prop 20 conditions, whereas we want to know about change in the opposite direction.
+```{r, warning=F}
+output_ttest=t.test(felons$felons_sum~felons$prop20,conf.level=0.95)
+# reverse output of confidence interval
+conf_int_wobblers_entering_prison = c(-output_ttest$conf.int[2],
+                      -output_ttest$conf.int[1])
+saveRDS(conf_int_wobblers_entering_prison,"../data/wobbler_range.RDS")
+```
+
+## Property Crime Rates and Average Cost Below $950
+
+We start by loading in the crime data and taking a quick look.
+```{r, warning=F}
+crimes=read.csv("../data/Crimes_and_Clearances_with_Arson-1985-2019.csv")
+head(crimes)
+```
+
+Our git repository contains the pdf describing what all of the column names mean. The ones we are interested in, and their definition, are listed below:
+- Property_sum: number of property crimes (sum of burglary, motor vehicle, and larceny)
+- LTtotal_sum: number of larceny-thefts
+- PropertyClr_sum: number of property crimes cleared aka charged
+- SLLARnao_sum: number of shoplifting crimes
+- LT400nao_sum: number of larceny thefts over $400
+- LT200400nao_sum: number of larceny thefts from $200-400
+- LT50200nao_sum: number of larceny thefts from $50-199
+- LT50nao_sum: number of larceny thefts under $50
+
+We remove county-level information by taking the sum of all counts in a category
+for a given year.
+```{r, warning=F}
+crimes_sumYear=crimes %>%
+  select(-County,-NCICCode) %>% group_by(Year) %>% summarise_each(funs(sum))
+```
+
+
+Here are the counts of property crimes per year and number of larceny thefts per year
+(larceny thefts make up a subset of the total property crimes)
+```{r, warning=F}
+crimes_sumYear %>%
+  ggplot(aes(x=Year))+
+  geom_point(aes(y=Property_sum),pch=2)+
+  geom_point(aes(y=LTtotal_sum),pch=3) +
+  ylim(0,max(crimes_sumYear$Property_sum)) +
+  labs(y="Sum of All Property Crimes or Only Larceny Crimes")
+
+```
+
+The decline in crime in the 1990s is a phenomenon observed across the United States, 
+and there is no consensus on the cause. We therefore remove all data points before 2000.
+```{r, warning=F}
+crimes_sumYear = crimes_sumYear %>% filter(Year>=2000)
+```
+
+We need to know the average cost of crimes under $950. We only have data on these
+values for larceny thefts, but they do make up around 55-70\% of property crimes,
+and seem to be on the rise in recent years.
+Let's see what the trends are:
+```{r, warning=F}
+# proportion of property crimes attributable to larceny
+crimes_sumYear %>% mutate(LRT_proportion=LTtotal_sum/Property_sum) %>%
+  ggplot(aes(x=Year,y=LRT_proportion))+
+  geom_point()
+
+# average of the above proportion across years
+avg_LRT_proportion=crimes_sumYear %>% mutate(LRT_proportion=LTtotal_sum/Property_sum) %>% summarise(avg_LRT_proportion=mean(LRT_proportion))
+avg_LRT_proportion
+```
+
+Here are the counts of each price range of larceny thefts
+```{r, warning=F}
+crime_costs=crimes_sumYear %>% select(Year,LT400nao_sum,LT200400nao_sum,LT50200nao_sum,LT50nao_sum) %>%
+  gather(cost_range,sum,LT400nao_sum,LT200400nao_sum,LT50200nao_sum,LT50nao_sum)
+
+# order the categorical data to reflect increasing discrete intervals
+crime_costs$cost_range=factor(crime_costs$cost_range, levels=c("LT50nao_sum","LT50200nao_sum","LT200400nao_sum","LT400nao_sum"))
+
+crime_costs %>% 
+  ggplot(aes(x=cost_range,y=sum,group=Year)) +
+  geom_line(col="grey") +
+  geom_point() 
+
+```
+
+There seems to be a clear decay where most crimes committed are for small values. We 
+are interested in the average cost of crimes below $950, and so we need to build
+a model that uses the data we do have to continuously predict the number of costs
+we observe. Since we are working with count data, we use the Poisson to model how the
+crime count changes with the cost of the crime, among the bounded cost ranges. 
+We spread the count of a crime category across all integer values before proceeding
+with our models, then parameterize our model, then make predictions for the shiny app.
+
+```{r, warning=F}
+# make a data frame in which the cost of a category is split evenly across its range
+cost_range_numeric=list("LT50nao_sum"=1:50,"LT50200nao_sum"=51:200,"LT200400nao_sum"=201:400)
+
+crime_costs_estimation = do.call(rbind,apply(crime_costs[crime_costs$cost_range!="LT400nao_sum",],1,function(row){ # row has variables Year, cost_range, and sum
+  return(data.frame(Year=row["Year"],cost=cost_range_numeric[[row["cost_range"]]],sum=as.integer(row["sum"])/length(cost_range_numeric[[row["cost_range"]]]),row.names = NULL))
+  
+}))
+
+```
+
+```{r, warning=F}
+# Poisson model 
+poisson.model = glm(sum ~ cost, crime_costs_estimation, family = poisson(link = "log"))
+```
+
+```{r, warning=F}
+summary(poisson.model)
+
+
+
+# Show how the Poisson model fits to the data
+pred_pois= data.frame(cost=1:950,sum=predict(poisson.model, newdata = data.frame(cost=1:950), type = "response"))
+
+ggplot() +
+  geom_point(data=crime_costs_estimation, aes(x=cost,y=sum,group=Year)) +
+  geom_line(data=pred_pois, aes(x=cost,y=sum),col="orange",lwd=2) +
+  ylim(0,max(crime_costs_estimation$sum))
+
+# poisson model parameters
+a=unname(coef(poisson.model)[1]) # intercept for log(y)
+b=unname(coef(poisson.model)[2]) # slope for log(y)
+
+# VALUES FOR SHINY
+# range that we care about
+high=950
+low=1
+
+# functions
+y_count=function(x) exp(a+(b-x)) # number of crimes of value x
+y_cost=function(x) x-exp(a+(b-x)) # total cost of all crimes of value x: cost of crime of value x - number of crimes of value x
+
+# expected number of crimes in price range provided
+total_crime=integrate(f=y_count,lower=low,upper=high)$value
+total_crime
+
+# expected total cost of all of these crimes (this accounts for number of crimes of each type)
+total_cost=integrate(f=y_cost,lower=low,upper=high)$value
+total_cost
+
+# average cost of each crime
+avg_cost=total_cost/total_crime
+avg_cost
+
+saveRDS(total_crime/as.numeric(avg_LRT_proportion),"../data/total_crime.RDS") # we inflate the total crime rate because not all thefts are larceny
+saveRDS(total_cost,"../data/total_cost.RDS")
+saveRDS(avg_cost,"../data/avg_cost.RDS")
+
+
+```
