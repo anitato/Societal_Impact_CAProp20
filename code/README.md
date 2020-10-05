@@ -2,6 +2,8 @@ Societal Impact and Cost of CA Prop 20
 ================
 Lida Anita To, Sivan Yair, and Fernanda Guizar
 
+\[1\] University of California - Davis, Dept. of Evolution & Ecology
+
 # California Proposition 20, Criminal Sentencing, Parole, and DNA Collection Initiative (2020)
 
 This Git Repository contains the directions to produce a widget that
@@ -43,14 +45,16 @@ as a result of Proposition 20?**
 ### More Information on Prop 20:
 
 Summary:
+
 <https://ballotpedia.org/California_Proposition_20,_Criminal_Sentencing,_Parole,_and_DNA_Collection_Initiative_(2020)#Assembly_Bill_109_.282011.29>
 
 Full statute text:
+
 <https://vig.cdn.sos.ca.gov/2020/general/pdf/topl-prop20.pdf>
 
 ## The Data
 
-National Archive of Criminal Justice Data:
+**National Archive of Criminal Justice Data:**
 
 United States Department of Justice. Office of Justice Programs. Bureau
 of Justice Statistics. National Corrections Reporting Program,
@@ -63,14 +67,14 @@ and Social Research \[distributor\], 2018-08-30.
     sentencing data. We filtered this dataset for California entries
     listed under “Property Crimes” (which include: larceny, burglary,
     fraud, and motor vehicle theft).
-  - **Directions:**
+  - *Directions:*
     1.  Make a free account with NACJD
     2.  Download the 1991-2016 data in `R` format
     3.  Place the data in the `Societal_Impact_CAProp20/data/` directory
     4.  Process, clean, and filter the data using
         `Societal_Impact_CAProp20/code/propertycrimes.R`
 
-California Department of Justice:
+**California Department of Justice:**
 
 <https://openjustice.doj.ca.gov/data>
 
@@ -78,18 +82,23 @@ California Department of Justice:
     in California (including those in which perpetrators were not
     caught) every year since 1980. It includes information on the number
     of property crimes committed that were valued $50 or less, $50-200,
-    $200-400, and $400+
-  - **Directions:**
-    1.  
-    2.  
-    3.  
-## Term Records for California
+    $200-400, and $400+.
+  - *Directions:*
+    1.  Hello world
+    2.  Hello again
+    3.  And again
 
-<https://github.com/anitato/Societal_Impact_CAProp20>
-<https://ballotpedia.org/California_Proposition_20,_Criminal_Sentencing,_Parole,_and_DNA_Collection_Initiative_(2020)#Assembly_Bill_109_.282011.29>
-<https://ballotpedia.org/California_Proposition_57,_Parole_for_Non-Violent_Criminals_and_Juvenile_Court_Trial_Requirements_(2016)>
-<https://ballotpedia.org/California_Proposition_47,_Reduced_Penalties_for_Some_Crimes_Initiative_(2014)>
-<https://ballotpedia.org/California_Proposition_36,_Changes_in_the_%22Three_Strikes%22_Law_(2012)>
-<https://www.shouselaw.com/ca/defense/laws/ab-109/>
+**Average cost of maintaining a single CA prison inmate per year**
+
 <https://lao.ca.gov/PolicyAreas/CJ/6_cj_inmatecost>
-<https://vig.cdn.sos.ca.gov/2020/general/pdf/topl-prop20.pdf>
+
+## R Shiny
+
+Code for the R Shiny interactive widget can be found in
+`Societal_Impact_CAProp20/code/CAProp20_rshiny.R`
+
+This widget allows you to calculate the net annual cost of the increase
+in prison population as a result of Proposition 20. There are sliders
+for
+
+<https://lao.ca.gov/PolicyAreas/CJ/6_cj_inmatecost>
