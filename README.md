@@ -4,7 +4,7 @@ Lida Anita To, Sivan Yair, and Fernanda Guizar
 
 University of California — Davis
 
-Deptartment of Evolution & Ecology
+Department of Evolution & Ecology
 
 -----
 
